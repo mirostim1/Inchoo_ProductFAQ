@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Inchoo_ProductFAQ::questions" title="F.A.Q." translate="title" module="Inchoo_ProductFAQ" sortOrder="100" parent="Magento_Backend::marketing_user_content" action="productfaq/questions/index" resource="Inchoo_ProductFAQ::questions"/>
+    </menu>
+</config>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">productfaq_question_form.question_form_data_source</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+
+    <settings>
+        <namespace>productfaq_question_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>productfaq_question_form.question_form_data_source</dep>
+        </deps>
+    </settings>
+
+    <dataSource name="question_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="productfaq/frontend/save"/>
+        </settings>
+    </dataSource>
+
+    <fieldset name="general">
+        <settings>
+            <label />
+        </settings>
+
+        <!--<hidden name="news_id" sortOrder="1">
+            <settings>
+                <dataScope>news_id</dataScope>
+            </settings>
+        </hidden>-->
+
+        <textarea name="sample_textarea" sortOrder="20">
+            <settings>
+                <label translate="true">Sample Textarea</label>
+                <dataScope>content</dataScope>
+            </settings>
+        </textarea>
+
+        <htmlContent name="htmlContent">
+            <block class="Inchoo\ProductFAQ\Block\Frontend\Faq" name="save_question_button" template="Inchoo_ProductFAQ::page/faq.phtml"/>
+        </htmlContent>
+
+    </fieldset>
+</form>

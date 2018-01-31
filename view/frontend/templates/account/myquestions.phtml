@@ -1,0 +1,30 @@
+<?php
+/**
+ * @var $block \Inchoo\ProductFAQ\Block\Frontend\Account\MyQuestions
+ */
+?>
+
+<h3><?= __('List of My Questions') . ' ('. count($block->getQuestions()) . ')'; ?></h3>
+
+<hr>
+
+<?php if(count($block->getQuestions()) > 0) : ?>
+
+    <?php foreach($block->getQuestions() as $myQuestion) : ?>
+        <b><?= __('Question'); ?>:</b> <?= $block->escapeHtml($myQuestion->getQuestion()); ?>
+        <br>
+        <b><?= __('Date'); ?>:</b> <?= $block->getDate($myQuestion->getId()); ?>
+        <br>
+        <b><?= __('Time'); ?>:</b> <?= $block->getTime($myQuestion->getId()); ?>
+        <br><br>
+        <b><?= __('Answer') ?>:</b> <?= $block->escapeHtml($myQuestion->getAnswer()); ?>
+        <br><br>
+        <a href="<?= $block->getLink($myQuestion->getProductId()); ?>" target="_blank"><?= __('View Question on Product Page'); ?></a>
+        <br><br><br>
+    <?php endforeach; ?>
+
+<?php else : ?>
+
+    <h3><?= __("You don't have any questions currently"); ?></h3>
+
+<?php endif; ?>

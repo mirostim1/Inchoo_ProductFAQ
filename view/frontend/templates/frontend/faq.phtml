@@ -1,0 +1,42 @@
+<?php
+/**
+ * @var $block \Inchoo\ProductFAQ\Block\Frontend\Faq\DisplayFaq
+ */
+?>
+
+<h1 ><?= __('F.A.Q.'); ?></h1>
+
+<hr>
+
+<?php if($block->getCollectionSize() > 0) : ?>
+
+    <?php foreach ($block->getFaq() as $question) : ?>
+        <b>Q:</b> <?= $block->escapeHtml($question->getQuestion()); ?>
+        <br>
+        <b>A:</b> <?= $block->escapeHtml($question->getAnswer()); ?>
+        <br><br>
+    <?php endforeach; ?>
+
+<?php else : ?>
+    <h3><?= __('There are no F.A.Q. for this product currently'); ?></h3>
+    <hr>
+    <br>
+<?php endif; ?>
+
+<?php if($block->userLoggedIn()) : ?>
+    <br>
+    <h3><?= __('Enter your question'); ?></h3><br>
+
+    <form name="question1" method="post" action="productfaq/frontend/save">
+        <textarea
+            name="question"
+            required
+            rows="3"
+            minlength="5" maxlength="500"
+            placeholder="Enter text of your question (min. 5 and max. 500 chars)"></textarea>
+        <br><br>
+        <input type="hidden" name="product_id" value="<?= $block->getProductId(); ?>" />
+        <input type="hidden" name="product_link" value="<?= $block->getProductLink(); ?>" />
+        <button type="submit" name="submit" value="Submit"><?= __('Submit Question'); ?></button>
+     </form>
+<?php endif; ?>

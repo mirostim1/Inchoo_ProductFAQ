@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">productfaq_questions_listing.productfaq_questions_listing_data_source</item>
+        </item>
+    </argument>
+
+    <settings>
+
+        <spinner>productfaq_questions_columns</spinner>
+        <deps>
+            <dep>productfaq_questions_listing.productfaq_questions_listing_data_source</dep>
+        </deps>
+    </settings>
+
+    <dataSource name="productfaq_questions_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">faq_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Inchoo_ProductFAQ::questions</aclResource>
+        <dataProvider class="Inchoo\ProductFAQ\Ui\Component\ListingFaq\DataProvider" name="productfaq_questions_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>faq_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>false</sticky>
+        </settings>
+
+        <!--
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        -->
+
+        <paging name="listing_paging"/>
+
+    </listingToolbar>
+
+    <columns name="productfaq_questions_columns">
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>faq_id</indexField>
+            </settings>
+        </selectionsColumn>
+        <column name="faq_id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="question">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Question</label>
+            </settings>
+        </column>
+        <column name="answer">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Answer</label>
+            </settings>
+        </column>
+
+        <column name="display" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Inchoo\ProductFAQ\Ui\Component\ListingFaq\Column\IsVisible"/>
+                <filter>select</filter>
+                <editor>
+                    <editorType>select</editorType>
+                </editor>
+                <dataType>select</dataType>
+                <label translate="true">Display in FAQ</label>
+            </settings>
+        </column>
+
+        <column name="customer_id">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Customer Id</label>
+            </settings>
+        </column>
+        <column name="customer_email">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Customer Email</label>
+            </settings>
+        </column>
+        <column name="product_id">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Product Id</label>
+            </settings>
+        </column>
+        <actionsColumn name="edit" class="Inchoo\ProductFAQ\Ui\Component\ListingFaq\Column\EditActions">
+            <settings>
+                <indexField>faq_id</indexField>
+            </settings>
+        </actionsColumn>
+        <actionsColumn name="delete" class="Inchoo\ProductFAQ\Ui\Component\ListingFaq\Column\DeleteActions">
+            <settings>
+                <indexField>faq_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>
