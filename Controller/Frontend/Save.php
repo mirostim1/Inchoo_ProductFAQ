@@ -52,6 +52,7 @@ class Save extends \Magento\Framework\App\Action\Action
         $this->faqCollectionFactory = $faqCollectionFactory;
         $this->storeManager = $contextStoreManager->getStoreManager();
         $this->messageManager = $messageManager;
+        $this->getUrl = $context->getUrl();
         parent::__construct($context);
     }
 
@@ -62,14 +63,24 @@ class Save extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        if (!$this->customerSession->isLoggedIn()) {
-            $resultRedirect = $this->resultRedirectFactory->create();
-            $resultRedirect->setPath('customer/account/login');
+        $resultRedirect = $this->resultRedirectFactory->create();
 
+        if (!$this->customerSession->isLoggedIn()) {
+            $resultRedirect->setPath('customer/account/login');
             return $resultRedirect;
         }
 
-        $productId = $this->getRequest()->getParam('product_id', false);
+        if(!$this->getRequest()->getParam('product_id', false)) {
+            $this->messageManager->addErrorMessage(__('Error - Product Id must be specified'));
+            $resultRedirect->setPath($this->_redirect->getRefererUrl());
+            return $resultRedirect;
+        }
+
+        if(!$this->getRequest()->getParam('question', false)) {
+            $this->messageManager->addErrorMessage(__('Error - Question must be specified'));
+            $resultRedirect->setPath($this->_redirect->getRefererUrl());
+            return $resultRedirect;
+        }
 
         $customerId = $this->customerSession->getId();
         $customerEmail = $this->customerSession->getCustomer()->getEmail();
@@ -78,20 +89,16 @@ class Save extends \Magento\Framework\App\Action\Action
 
         $faq = $this->productFaqFactory->create();
 
-        $faq->setProductId($productId);
+        $faq->setProductId($this->getRequest()->getParam('product_id', false));
         $faq->setStoreId($storeId);
         $faq->setCustomerId($customerId);
         $faq->setCustomerEmail($customerEmail);
         $faq->setQuestion($this->getRequest()->getParam('question', false));
-        $faq->setDisplay($this->getRequest()->getParam('display', false));
 
-        $save = $this->productFaqResource->save($faq);
+        $this->productFaqResource->save($faq);
 
-        if($save) {
-            $this->messageManager->addSuccessMessage(__('Question has been successfully saved'));
-        }
+        $this->messageManager->addSuccessMessage(__('Question has been successfully saved'));
 
-        $resultRedirect = $this->resultRedirectFactory->create();
         $resultRedirect->setPath($this->_redirect->getRefererUrl());
 
         return $resultRedirect;

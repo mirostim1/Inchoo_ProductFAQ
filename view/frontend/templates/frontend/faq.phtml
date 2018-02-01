@@ -27,7 +27,7 @@
     <br>
     <h3><?= __('Enter your question'); ?></h3><br>
 
-    <form name="question1" method="post" action="productfaq/frontend/save">
+    <form name="question1" method="post" action="<?= $block->getUrl('productfaq/frontend/save'); ?>">
         <textarea
             name="question"
             required

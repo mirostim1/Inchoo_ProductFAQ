@@ -66,11 +66,9 @@ class Delete extends \Magento\Backend\App\Action
 
         $this->productFaqResource->load($productFaq, $faqId);
 
-        $delete = $this->productFaqResource->delete($productFaq);
+        $this->productFaqResource->delete($productFaq);
 
-        if($delete) {
-            $this->messageManager->addSuccessMessage(__("F.A.Q with ID #$faqId has been successfully deleted"));
-        }
+        $this->messageManager->addSuccessMessage(__("F.A.Q with ID #$faqId has been successfully deleted"));
 
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
         $resultRedirect->setPath('productfaq/questions/index');

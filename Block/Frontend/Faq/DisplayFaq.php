@@ -5,6 +5,7 @@ namespace Inchoo\ProductFAQ\Block\Frontend\Faq;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Customer\Model\Session;
 use Magento\Framework\Registry;
+use \Magento\Framework\UrlInterface;
 
 /**
  * Class DisplayFaq
@@ -16,6 +17,7 @@ class DisplayFaq extends \Magento\Framework\View\Element\Template
      * @var \Inchoo\ProductFAQ\Model\ResourceModel\ProductFaq\CollectionFactory
      */
     protected $faqCollectionFactory;
+    protected $url;
 
     /**
      * DisplayFaq constructor.
@@ -28,13 +30,15 @@ class DisplayFaq extends \Magento\Framework\View\Element\Template
         Context $context,
         \Inchoo\ProductFAQ\Model\ResourceModel\ProductFaq\CollectionFactory $faqCollectionFactory,
         Session $customerSession,
-        Registry $registry
+        Registry $registry,
+        UrlInterface $url
     )
     {
         $this->storeManager = $context->getStoreManager();
         $this->faqCollectionFactory = $faqCollectionFactory;
         $this->customerSession = $customerSession;
         $this->registry = $registry;
+        $this->url = $url;
         parent::__construct($context);
     }
 
@@ -43,6 +47,7 @@ class DisplayFaq extends \Magento\Framework\View\Element\Template
      */
     public function getFaq()
     {
+        /* $productId = $this->getRequest()->getParam('id', false); */
         $productId = $this->registry->registry('current_product')->getId();
         $storeId = $this->storeManager->getStore()->getId();
 
@@ -83,15 +88,5 @@ class DisplayFaq extends \Magento\Framework\View\Element\Template
         $productId = $this->registry->registry('current_product')->getId();
 
         return $productId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProductLink()
-    {
-        $productLink = $this->registry->registry('current_product')->getUrlKey();
-
-        return $productLink;
     }
 }

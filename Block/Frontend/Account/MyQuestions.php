@@ -23,7 +23,7 @@ class MyQuestions extends \Magento\Framework\View\Element\Template
     protected $productFaqResource;
     protected $productFaqModelFactory;
     protected $productModelFactory;
-    protected $timezone;
+    protected $date;
 
     /**
      * MyQuestions constructor.
@@ -44,7 +44,7 @@ class MyQuestions extends \Magento\Framework\View\Element\Template
         \Magento\Catalog\Model\ProductFactory $productModelFactory,
         Session $session,
         Registry $registry,
-        \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone
+        \Magento\Framework\Stdlib\DateTime\TimezoneInterface $date
     )
     {
         $this->productFaqModelFactory = $productFaqModelFactory;
@@ -53,7 +53,7 @@ class MyQuestions extends \Magento\Framework\View\Element\Template
         $this->productModelFactory = $productModelFactory;
         $this->session = $session;
         $this->registry = $registry;
-        $this->timezone = $timezone;
+        $this->date = $date;
         parent::__construct($context);
     }
 
@@ -87,13 +87,9 @@ class MyQuestions extends \Magento\Framework\View\Element\Template
      * @param $productFaqId
      * @return string
      */
-    public function getDate($productFaqId)
+    public function getDate($datetime)
     {
-        $faq = $this->productFaqModelFactory->create();
-        $this->productFaqResource->load($faq, $productFaqId);
-        $dateTime = $faq->getCreatedAt();
-
-        $date = $this->timezone->formatDate($dateTime, 3);
+        $date = $this->formatDate($datetime);
 
         return $date;
     }
@@ -102,13 +98,9 @@ class MyQuestions extends \Magento\Framework\View\Element\Template
      * @param $productFaqId
      * @return string
      */
-    public function getTime($productFaqId)
+    public function getTime($datetime)
     {
-        $faq = $this->productFaqModelFactory->create();
-        $this->productFaqResource->load($faq, $productFaqId);
-        $dateTime = $faq->getCreatedAt();
-
-        $time = $this->timezone->formatDateTime($dateTime, 3, 3, null, 'Europe/Zagreb', 'HH:mm');
+        $time = $this->formatTime($datetime);
 
         return $time;
     }

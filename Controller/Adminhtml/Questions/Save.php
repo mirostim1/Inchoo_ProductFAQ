@@ -72,11 +72,9 @@ class Save extends \Magento\Backend\App\Action
         $productFaq->setAnswer($answer);
         $productFaq->setDisplay($display);
 
-        $save = $this->productFaqResource->save($productFaq);
+        $this->productFaqResource->save($productFaq);
 
-        if($save) {
-            $this->messageManager->addSuccessMessage(__("F.A.Q. with Id #$faqId has been successfully edited"));
-        }
+        $this->messageManager->addSuccessMessage(__("F.A.Q. with Id #$faqId has been successfully edited"));
 
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
         $resultRedirect->setPath('productfaq/questions/index');

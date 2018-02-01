@@ -13,13 +13,19 @@
     <?php foreach($block->getQuestions() as $myQuestion) : ?>
         <b><?= __('Question'); ?>:</b> <?= $block->escapeHtml($myQuestion->getQuestion()); ?>
         <br>
-        <b><?= __('Date'); ?>:</b> <?= $block->getDate($myQuestion->getId()); ?>
+        <b><?= __('Date'); ?>:</b> <?= $block->getDate($myQuestion->getCreatedAt()); ?>
         <br>
-        <b><?= __('Time'); ?>:</b> <?= $block->getTime($myQuestion->getId()); ?>
+        <b><?= __('Time'); ?>:</b> <?= $block->getTime($myQuestion->getCreatedAt()); ?>
         <br><br>
         <b><?= __('Answer') ?>:</b> <?= $block->escapeHtml($myQuestion->getAnswer()); ?>
         <br><br>
-        <a href="<?= $block->getLink($myQuestion->getProductId()); ?>" target="_blank"><?= __('View Question on Product Page'); ?></a>
+        <a href="<?= $block->getLink($myQuestion->getProductId()); ?>" target="_blank">
+            <?php
+                if($myQuestion->getDisplay() == 1) {
+                    echo __('View Question on Product Page');
+                }
+            ?>
+        </a>
         <br><br><br>
     <?php endforeach; ?>
 
